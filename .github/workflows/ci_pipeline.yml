@@ -35,7 +35,7 @@ jobs:
       - name: Run Tests
         run: |
           cd api
-          mix ecto.create
+          # mix ecto.create
           mix test
 
   setup-frontend:
