@@ -35,7 +35,8 @@ jobs:
           cd api
           pwd
           mix deps.get
-          mix test
+      - name: Run Test
+        run: mix test
 
   # backend-test:
   #   name: Test Backend
@@ -68,16 +69,18 @@ jobs:
           pwd
           yarn install
 
-  # frontend-test:
-  #   name: Test Frontend
-  #   runs-on: ubuntu-latest
-  #   needs: setup-frontend
+  frontend-test:
+    name: Test Frontend
+    runs-on: ubuntu-latest
+    needs: setup-frontend
 
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Run Tests
-  #       run: |
-  #         cd front
-  #         pwd
-  #         yarn test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Run Tests
+        run: |
+          cd front
+          pwd
+          yarn test
 
