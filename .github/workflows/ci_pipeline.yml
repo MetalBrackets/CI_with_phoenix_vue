@@ -38,7 +38,10 @@ jobs:
           pwd
           mix deps.get
       - name: Run Tests
-        run: mix test
+        run: |
+          cd api
+          pwd
+          mix test
 
   # backend-test:
   #   name: Test Backend
