@@ -13,20 +13,20 @@ jobs:
     name: Build Backend
     runs-on: ubuntu-latest
     
-    services:
-       db:
-          image: postgres:12
-          env:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: postgres
-            POSTGRES_DB: db_test
-          ports: ['5432:5432']
-          options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    # services:
+    #    db:
+    #       image: postgres:12
+    #       env:
+    #         POSTGRES_USER: postgres
+    #         POSTGRES_PASSWORD: postgres
+    #         POSTGRES_DB: db_test
+    #       ports: ['5432:5432']
+    #       options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-      - name: Set up Elixir and Phoenix
       - uses: actions/checkout@v2
-      - uses: erlef/setup-beam@v1.16
+      - name: Set up Elixir and Phoenix
+        uses: erlef/setup-beam@v1.16
         with:
           elixir-version: 1.15.7
           otp-version: 26.0
@@ -53,13 +53,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: "yarn"
       - name: Install Frontend Dependencies
+        uses: actions/checkout@v2
       - run: |
           cd front
           pwd
