@@ -37,21 +37,23 @@ jobs:
           cd api
           pwd
           mix deps.get
-
-  backend-test:
-    name: Test Backend
-    runs-on: ubuntu-latest
-    needs: setup-backend
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        
       - name: Run Tests
-        run: |
-          cd api
-          pwd
-          mix test
+        run: mix test
+
+  # backend-test:
+  #   name: Test Backend
+  #   runs-on: ubuntu-latest
+  #   needs: setup-backend
+
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+        
+  #     - name: Run Tests
+  #       run: |
+  #         cd api
+  #         pwd
+  #         mix test
 
   setup-frontend:
     name: Build Frontend
