@@ -9,12 +9,12 @@ on:
   #   types: ['checks_requested']
 
 jobs:
-  setup:
-    name: Build and Test Backend
+  setup-backend:
+    name: Build Backend
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      # - uses: actions/checkout@v2
       - name: Set up Elixir and Phoenix
         uses: erlef/setup-beam@v1.16
         with:
@@ -25,18 +25,23 @@ jobs:
           cd api
           pwd
           mix deps.get
-          mix test
-      - name: Run Backend Tests
+
+  backend-test:
+    name: Test Backend
+    runs-on: ubuntu-latest
+    needs: setup
+
+    steps:
+      - name: Install Backend Dependencies
         run: |
           cd api
-          pwd
-          echo "Current directory: $PWD"
+          mix ecto.create
           mix test
 
-  frontend-build:
-    name: Build and Test Frontend
+  setup-frontend:
+    name: Build Frontend
     runs-on: ubuntu-latest
-    # needs: setup
+    needs: setup
 
     steps:
       - name: Install Node.js
@@ -46,19 +51,9 @@ jobs:
           # cache: "yarn"
       - name: Install Frontend Dependencies
         run: |
-          cd front_time_manager
+          cd front
           pwd
           yarn
       - name: Test
         run: |
           echo "coucou"
-
-  # backend-build:
-  #   name: Build and Test Backend
-  #   runs-on: ubuntu-latest
-  #   needs: setup
-
-  # - name: Run Backend Tests
-  #   run: |
-  #     cd api_time_manager
-  #     mix test
