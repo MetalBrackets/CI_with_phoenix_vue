@@ -1,4 +1,4 @@
-oname: Main Build and Test CI
+name: Main Build and Test CI
 
 on:
   push:
