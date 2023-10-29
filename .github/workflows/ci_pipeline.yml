@@ -18,13 +18,15 @@ jobs:
         image: postgres:12
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: admin
           POSTGRES_DB: db_test
         ports: ['5432:5432']
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
           
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        
       - name: Set up Elixir and Phoenix
         uses: erlef/setup-beam@v1.16
         with:
@@ -35,23 +37,21 @@ jobs:
           cd api
           pwd
           mix deps.get
-      - name: Run Test
+
+  backend-test:
+    name: Test Backend
+    runs-on: ubuntu-latest
+    needs: setup-backend
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Run Tests
         run: |
           cd api
           pwd
           mix test
-
-  # backend-test:
-  #   name: Test Backend
-  #   runs-on: ubuntu-latest
-  #   needs: setup-backend
-
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Run Tests
-  #       run: |
-  #         cd api
-  #         # mix ecto.create
 
   setup-frontend:
     name: Build Frontend
