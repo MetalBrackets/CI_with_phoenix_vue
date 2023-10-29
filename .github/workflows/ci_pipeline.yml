@@ -54,16 +54,16 @@ jobs:
 
     steps:
       - name: Install Node
-      - uses: actions/checkout@v2
+      # - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: "yarn"
+      - name: Install Frontend Dependencies
       - run: |
           cd front
           pwd
           yarn install
-      # - name: Install Frontend Dependencies
 
   frontend-test:
     name: Test Frontend
